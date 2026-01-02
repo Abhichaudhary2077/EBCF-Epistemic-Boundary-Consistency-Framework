@@ -1,4 +1,4 @@
-Example — For a Kid
+ Example — For a Kid
 Question
 
 “Why did I hear a loud noise outside?”

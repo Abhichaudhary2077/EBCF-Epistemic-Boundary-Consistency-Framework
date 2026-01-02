@@ -1,8 +1,8 @@
-from core.state import EpistemicState, Assumption
-from core.consistency import ConsistencyMonitor
-from core.identifiability import IdentifiabilityAnalyzer
-from core.controller import EpistemicController
-from reporting.reporting_text import generate_human_report
+from ebcf.core.state import EpistemicState, Assumption
+from ebcf.core.consistency import ConsistencyMonitor
+from ebcf.core.identifiability import IdentifiabilityAnalyzer
+from ebcf.core.controller import EpistemicController
+from ebcf.reporting.reporting_text import generate_human_report
 
 
 def parse_list(text):

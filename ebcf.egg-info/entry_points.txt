@@ -1,0 +1,2 @@
+[console_scripts]
+ebcf = ebcf.cli:main

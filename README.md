@@ -3,14 +3,14 @@
 > **EBCF answers one question only:**  
 > **“Is it honest to answer this question with what we currently know?”**
 
-It does **not** give answers.  
-It decides **whether answering is allowed**.
+EBCF does **not** give answers.  
+It decides **whether answering is epistemically allowed**.
 
 ---
 
-## What Does “Epistemic” Mean Here?
+## What Does “Epistemic” Mean (In This Project)?
 
-In this project, **epistemic** simply means:
+In EBCF, **epistemic** simply means:
 
 > **Related to knowledge — what is known, what is not known,  
 > and whether something can be known at all with the given information.**
@@ -22,7 +22,7 @@ No philosophy degree required.
 
 ## A Very Simple Explanation (For Anyone)
 
-Imagine someone asks you:
+Imagine someone asks:
 
 > “What is inside this closed box?”
 
@@ -36,7 +36,7 @@ Then the **honest answer** is:
 > “I don’t know.”
 
 That moment — when you stop instead of guessing —  
-that is an **epistemic boundary**.
+is called an **epistemic boundary**.
 
 **EBCF is code that detects that moment automatically.**
 
@@ -59,7 +59,7 @@ Most systems (including AI systems):
 
 ## What EBCF Does (Precisely)
 
-EBCF checks four things:
+EBCF evaluates four things:
 
 1. **What you know** (observables)
 2. **What you assume** (assumptions)
@@ -68,9 +68,9 @@ EBCF checks four things:
 
 If uncertainty:
 - stops improving **and**
-- the task cannot be solved even in principle
+- the task is non-identifiable even in principle
 
-➡️ **EBCF stops the system and explains why.**
+➡️ **EBCF halts reasoning and explains why.**
 
 ---
 
@@ -81,9 +81,9 @@ EBCF is **not**:
 - ❌ an AI model  
 - ❌ a predictor  
 - ❌ a solver  
-- ❌ a decision-maker  
+- ❌ a diagnostic system  
 
-It does **not** tell you *what* is true.
+It does **not** tell you *what is true*.
 
 It tells you whether **claiming truth would be dishonest**.
 
@@ -93,11 +93,11 @@ It tells you whether **claiming truth would be dishonest**.
 
 Use EBCF **before answering** when:
 
-- ❓ Information is incomplete
-- ⚠️ Wrong answers are costly
-- 🧠 Assumptions are hidden
-- 🔬 You care about scientific honesty
-- 🤖 You want AI systems to refuse instead of hallucinate
+- ❓ information is incomplete
+- ⚠️ wrong answers are costly
+- 🧠 assumptions are hidden
+- 🔬 scientific honesty matters
+- 🤖 you want AI systems to refuse instead of hallucinate
 
 Typical domains:
 - medicine
@@ -111,7 +111,7 @@ Typical domains:
 
 ## When Should You NOT Use EBCF?
 
-Do NOT use EBCF when:
+Do **not** use EBCF when:
 
 - you just want a guess
 - approximation is acceptable
@@ -122,9 +122,9 @@ EBCF is **strict by design**.
 
 ---
 
-## Minimal Usage Example (For Any Python Developer)
+## Minimal Usage Example (Any Python Developer)
 
-"""python
+```python
 from ebcf import epistemic_check
 
 result = epistemic_check(
@@ -135,73 +135,61 @@ result = epistemic_check(
 print(result)
 
 
-output:
-EpistemicResult(
-  allowed=False,
-  confidence=0.9,
-  reason="Non-identifiable under current observables"
-)
-"""
 
-## Graphical Interface (For Everyone)
 
-EBCF includes a minimal graphical interface for non-technical users.
-
-Run:
-
-```bash
-python ebcf_gui.py
 
 
 
 
 📘 Medical Reference Example (Non-Diagnostic)
 
-EBCF includes a reference implementation for medical symptom reasoning, designed to demonstrate how epistemic boundaries arise in real-world decision-making.
+EBCF includes a reference implementation for medical symptom reasoning.
 
-Important
+⚠️ Important
+This example does not diagnose, predict disease,
+or replace medical professionals.
 
-This example does not diagnose, does not predict disease, and does not replace medical professionals.
-It evaluates whether conclusions are epistemically justified given the information available.
+It only evaluates whether conclusions are epistemically justified.
 
 Example: Chest Pain
 
-Chest pain is a common presentation where:
+Chest pain is a classic case where:
 
 multiple serious and non-serious causes coexist
 
-symptoms alone are often insufficient to distinguish them
+symptoms alone are often insufficient
 
 false certainty can be dangerous
 
-The reference flow:
+Reference flow behavior:
 
 collects only directly observable symptoms
 
-forbids disease labels or interpretive conclusions
+forbids disease labels or interpretations
 
 explicitly surfaces missing clinical information
 
 triggers an epistemic STOP when causes remain indistinguishable
 
-If red-flag indicators are present, the system immediately halts reasoning and advises seeking urgent medical care.
+If red-flag indicators appear, the system halts immediately and advises seeking urgent care.
 
-What this example demonstrates
+What This Example Demonstrates
 
-How EBCF separates observations from assumptions
+how observations are separated from assumptions
 
-How missing information is made explicit
+how missing information is made explicit
 
-Where and why epistemic reasoning must stop
+where and why epistemic reasoning must stop
 
-Why uncertainty is sometimes irreducible without new data
+why uncertainty can be irreducible without new data
 
 This example is intentionally conservative and scope-limited.
+
 It exists to show when not to reason, not how to diagnose.
 
-Reuse
+Reuse in Other Domains
 
-The same structure can be adapted to other domains, including:
+The same structure applies to:
 
 debugging
 
@@ -211,4 +199,5 @@ ML evaluation
 
 system modeling
 
-Only the question specification changes — the EBCF core remains the same.
+Only the question specification changes.
+The EBCF core remains the same.

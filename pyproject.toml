@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ebcf"
-version = "0.1.0"
+version = "0.1.1"
 description = "Epistemic Boundary & Consistency Framework — a Python library to decide when answering a question is epistemically justified."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -13,7 +13,7 @@ authors = [
   { name = "Abhi Chaudhary", email = "abhisejwal51@gmail.com" }
 ]
 
-license = { text = "MIT" }
+license = "MIT"
 
 dependencies = []
 
@@ -21,3 +21,10 @@ dependencies = []
 Homepage = "https://github.com/Abhichaudhary2077/EBCF-Epistemic-Boundary-Consistency-Framework"
 Repository = "https://github.com/Abhichaudhary2077/EBCF-Epistemic-Boundary-Consistency-Framework"
 Documentation = "https://github.com/Abhichaudhary2077/EBCF-Epistemic-Boundary-Consistency-Framework#readme"
+
+[project.scripts]
+ebcf = "ebcf.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ebcf*"]
+exclude = ["logs*", "examples*", "__pycache__*"]

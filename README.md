@@ -151,3 +151,64 @@ Run:
 
 ```bash
 python ebcf_gui.py
+
+
+
+
+📘 Medical Reference Example (Non-Diagnostic)
+
+EBCF includes a reference implementation for medical symptom reasoning, designed to demonstrate how epistemic boundaries arise in real-world decision-making.
+
+Important
+
+This example does not diagnose, does not predict disease, and does not replace medical professionals.
+It evaluates whether conclusions are epistemically justified given the information available.
+
+Example: Chest Pain
+
+Chest pain is a common presentation where:
+
+multiple serious and non-serious causes coexist
+
+symptoms alone are often insufficient to distinguish them
+
+false certainty can be dangerous
+
+The reference flow:
+
+collects only directly observable symptoms
+
+forbids disease labels or interpretive conclusions
+
+explicitly surfaces missing clinical information
+
+triggers an epistemic STOP when causes remain indistinguishable
+
+If red-flag indicators are present, the system immediately halts reasoning and advises seeking urgent medical care.
+
+What this example demonstrates
+
+How EBCF separates observations from assumptions
+
+How missing information is made explicit
+
+Where and why epistemic reasoning must stop
+
+Why uncertainty is sometimes irreducible without new data
+
+This example is intentionally conservative and scope-limited.
+It exists to show when not to reason, not how to diagnose.
+
+Reuse
+
+The same structure can be adapted to other domains, including:
+
+debugging
+
+scientific experiments
+
+ML evaluation
+
+system modeling
+
+Only the question specification changes — the EBCF core remains the same.

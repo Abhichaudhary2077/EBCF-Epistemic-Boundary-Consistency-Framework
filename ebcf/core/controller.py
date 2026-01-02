@@ -1,4 +1,4 @@
-from core.boundary import BoundaryRecord
+from .boundary import BoundaryRecord
 
 
 class EpistemicController:

@@ -1,161 +1,144 @@
 # EBCF — Epistemic Boundary & Consistency Framework
 
-> **EBCF decides when answering a question is NOT allowed.**  
-> It does not predict, diagnose, or guess.  
-> It detects epistemic limits and explains *why* understanding breaks.
+> **EBCF answers one question only:**  
+> **“Is it honest to answer this question with what we currently know?”**
+
+It does **not** give answers.  
+It decides **whether answering is allowed**.
 
 ---
 
-## What Problem Does EBCF Solve?
+## What Does “Epistemic” Mean Here?
 
-Most systems (including AI) try to give an answer even when the information is insufficient.
+In this project, **epistemic** simply means:
 
-**EBCF exists to stop at the correct moment — and justify that stop.**
+> **Related to knowledge — what is known, what is not known,  
+> and whether something can be known at all with the given information.**
+
+That’s it.  
+No philosophy degree required.
+
+---
+
+## A Very Simple Explanation (For Anyone)
+
+Imagine someone asks you:
+
+> “What is inside this closed box?”
+
+If:
+- you can’t see inside  
+- you can’t open it  
+- you have no sensors  
+
+Then the **honest answer** is:
+
+> “I don’t know.”
+
+That moment — when you stop instead of guessing —  
+that is an **epistemic boundary**.
+
+**EBCF is code that detects that moment automatically.**
+
+---
+
+## Why EBCF Exists
+
+Most systems (including AI systems):
+
+- keep answering even when they shouldn’t
+- hide uncertainty
+- sound confident while guessing
+
+**EBCF exists to prevent that.**
 
 > Uncertainty is not failure.  
 > Pretending uncertainty does not exist is failure.
 
 ---
 
-## What EBCF Is (and Is Not)
+## What EBCF Does (Precisely)
 
-### ✅ EBCF IS
-- An epistemic control system
-- A boundary detector for knowledge
-- A safety / honesty layer over reasoning or AI
-- A framework that prevents false certainty
+EBCF checks four things:
 
-### ❌ EBCF IS NOT
-- An AI model
-- A predictor or solver
-- A diagnosis engine
-- A ChatGPT replacement
+1. **What you know** (observables)
+2. **What you assume** (assumptions)
+3. **What you are trying to do** (task)
+4. **Whether understanding is actually improving**
 
-EBCF does **not** answer questions.  
-It decides **whether answering is epistemically justified**.
+If uncertainty:
+- stops improving **and**
+- the task cannot be solved even in principle
+
+➡️ **EBCF stops the system and explains why.**
 
 ---
 
-## How EBCF Works (High Level)
+## What EBCF Is NOT
 
-1. You provide:
-   - **Observables** (what is known)
-   - **Assumptions** (what is believed)
-2. A domain adapter attempts explanations
-3. EBCF tracks:
-   - error trends
-   - consistency
-   - assumption stress
-   - identifiability
-4. If uncertainty cannot be reduced in principle:
-   - EBCF **stops**
-   - produces an **epistemic report**
-   - vetoes any AI answer
+EBCF is **not**:
+
+- ❌ an AI model  
+- ❌ a predictor  
+- ❌ a solver  
+- ❌ a decision-maker  
+
+It does **not** tell you *what* is true.
+
+It tells you whether **claiming truth would be dishonest**.
 
 ---
 
-## Example 1 — General / Everyday Use
+## When Should You Use EBCF?
 
-### Scenario  
-You hear a loud noise outside at night.
+Use EBCF **before answering** when:
 
-### Typical behavior ❌  
-- Guess the cause  
-- Sound confident  
-- Possibly be wrong  
+- ❓ Information is incomplete
+- ⚠️ Wrong answers are costly
+- 🧠 Assumptions are hidden
+- 🔬 You care about scientific honesty
+- 🤖 You want AI systems to refuse instead of hallucinate
 
-### EBCF behavior ✅  
-- Multiple causes fit the same sound
-- No discriminating information exists
-- EBCF stops and reports:
-
-> “With only sound and no visual information, the cause cannot be identified.  
-> The breakdown occurs at the inference step from sound to cause.”
-
-No guessing. No fake confidence.
+Typical domains:
+- medicine
+- research
+- machine learning
+- simulations
+- decision systems
+- safety-critical logic
 
 ---
 
-## Example 2 — For Researchers / Engineers
+## When Should You NOT Use EBCF?
 
-### Scenario  
-A system model shows error stagnation and multiple explanations fit equally well.
+Do NOT use EBCF when:
 
-### Typical outcome ❌  
-- Endless training
-- Hidden assumptions
-- Overconfidence
+- you just want a guess
+- approximation is acceptable
+- uncertainty doesn’t matter
+- exploration > correctness
 
-### EBCF outcome ✅  
-- Tracks uncertainty evolution
-- Detects non-identifiability
-- Explicitly marks violated assumptions
-- Produces a boundary report:
-
-Epistemic status: Non-identifiable under current observables
-Structural location: Dynamics ↔ Assumptions
-Confidence: 0.90
-
-
-This indicates:
-- the model did not fail
-- the question itself is ill-posed
-- new observables are required to proceed
+EBCF is **strict by design**.
 
 ---
 
-## Example 3 — Differentiating EBCF from AI
+## Minimal Usage Example (For Any Python Developer)
 
-### Scenario  
-An AI system proposes an answer with high confidence.
+"""python
+from ebcf import epistemic_check
 
+result = epistemic_check(
+    observables=["chest pain", "normal ECG"],
+    missing=["blood test"]
+)
 
-
-AI proposal:
-"Likely cause identified based on patterns"
-Confidence: 0.85
-
-
-### EBCF decision
+print(result)
 
 
-REJECTED
-Reason: Epistemic boundary detected — answering would require guessing
-
-
-### Key Difference
-
-| AI | EBCF |
-|----|------|
-| Tries to answer | Decides if answering is allowed |
-| Probabilistic | Epistemically constrained |
-| Can hallucinate | Cannot hallucinate |
-| Soft uncertainty | Hard, justified stop |
-
-> **AI proposes. EBCF disposes.**
-
----
-
-## Project Structure
-
-
-
-ebcf/
-├── core/ # Epistemic logic (never guesses)
-├── adapter/ # Domain-specific explanation attempts
-├── reporting/ # Human-readable epistemic reports
-├── ai/ # Optional AI proposal layer
-├── utils/ # Logging & experiment tracking
-├── examples/ # Runnable demonstrations
-├── logs/ # Experiment outputs
-└── run.py # Main entry point
-
-
----
-
-## Core Principle
-
-> **EBCF does not try to be right.  
-It tries to avoid being wrong.**
-
----
+output:
+EpistemicResult(
+  allowed=False,
+  confidence=0.9,
+  reason="Non-identifiable under current observables"
+)
+"""

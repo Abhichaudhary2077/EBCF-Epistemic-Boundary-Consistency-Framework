@@ -142,3 +142,12 @@ EpistemicResult(
   reason="Non-identifiable under current observables"
 )
 """
+
+## Graphical Interface (For Everyone)
+
+EBCF includes a minimal graphical interface for non-technical users.
+
+Run:
+
+```bash
+python ebcf_gui.py

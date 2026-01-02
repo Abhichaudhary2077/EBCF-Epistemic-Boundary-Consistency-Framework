@@ -1,80 +1,48 @@
-from ebcf_cli import parse_list
-from core.state import EpistemicState, Assumption
-from core.consistency import ConsistencyMonitor
-from core.identifiability import IdentifiabilityAnalyzer
-from core.controller import EpistemicController
+from ebcf import epistemic_check
+
+
+def ask_list(prompt):
+    text = input(prompt).strip()
+    if not text:
+        return []
+    return [x.strip() for x in text.split(",")]
 
 
 def main():
-    print("\n=== Can This Question Be Answered? ===\n")
+    print("\n=== EBCF — Honest Reasoning Checker ===\n")
+    print("This tool checks whether answering a question would require guessing.\n")
 
-    problem = input("Briefly describe your problem:\n> ").strip()
+    print("Choose a mode:")
+    print("1) General situation")
+    print("2) Health / medical")
+    print("3) Research / science")
+    print("4) Custom / advanced")
 
-    known = input(
-        "\nWhat information do you already have? (comma separated)\n> "
-    )
-    known_list = parse_list(known)
+    choice = input("\nEnter choice (1–4): ").strip()
 
-    missing = input(
-        "\nIs there important information you do NOT have yet? (yes/no)\n> "
-    ).strip().lower()
+    print("\nTell me what you KNOW.")
+    observables = ask_list("List things you are sure about (comma separated): ")
 
-    missing_items = []
-    if missing == "yes":
-        missing_items = parse_list(
-            input("List missing information (comma separated):\n> ")
-        )
+    print("\nTell me what you do NOT know.")
+    missing = ask_list("List important missing information (comma separated): ")
 
-    # Build epistemic state (hidden from user)
-    observables = {
-        "problem": problem,
-        "known_info": known_list
-    }
-
-    assumptions = {}
-    for item in missing_items:
-        assumptions[item] = Assumption(
-            id=item,
-            description=f"Required but missing information: {item}",
-            status="violated"
-        )
-
-    state = EpistemicState(
+    result = epistemic_check(
         observables=observables,
-        assumptions=assumptions
+        missing=missing
     )
 
-    controller = EpistemicController(
-        ConsistencyMonitor(),
-        IdentifiabilityAnalyzer()
-    )
+    print("\n--- EBCF VERDICT ---\n")
 
-    boundary = None
-    for _ in range(5):
-        error = 1.0 if missing_items else 0.0
-        boundary = controller.step(state, error)
-        if boundary:
-            break
-
-    print("\n--- VERDICT ---\n")
-
-    if boundary:
-        print("❌ A reliable answer is NOT possible right now.\n")
-        print("Why?")
-        print(
-            "There is not enough information to rule out multiple possibilities."
-        )
-        print("\nWhat would help?")
-        if missing_items:
-            for item in missing_items:
-                print(f"- {item}")
-        else:
-            print("- Additional relevant information")
+    if result.allowed:
+        print("✅ It is epistemically allowed to proceed.")
+        print(f"Confidence: {result.confidence:.2f}")
     else:
-        print("✅ A reliable answer MAY be possible with current information.")
-        print("Proceed carefully.")
+        print("❌ Stop. Answering would require guessing.")
+        print(f"Reason: {result.reason}")
+        print(f"Confidence: {result.confidence:.2f}")
 
-    print("\n(This tool does not give answers — it checks if answers are trustworthy.)")
+    print("\nRemember:")
+    print("Not knowing yet is not failure. Guessing is.")
 
 
 if __name__ == "__main__":

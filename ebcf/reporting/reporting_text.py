@@ -24,10 +24,12 @@ def generate_human_report(boundary_record, state):
     print(f"- {boundary_record.confidence * 100:.1f}%\n")
 
     print("How much the system tried:")
-    print(f"- Iterations attempted: {len(boundary_record.assumption_context)}")
+    print(f"- Iterations attempted: {len(state.error_history)}")
 
+    print("\nVisual justification:")
+    print("- See uncertainty graph (error vs iteration)")
 
-    print("What this means:")
+    print("\nWhat this means:")
     print(
         "The system cannot progress further without new observables or "
         "a change in assumptions. Continuing would require guessing, "

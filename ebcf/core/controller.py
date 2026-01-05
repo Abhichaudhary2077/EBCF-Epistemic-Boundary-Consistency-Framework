@@ -20,31 +20,24 @@ class EpistemicController:
         # Check identifiability (conservative by default)
         identifiable = self.identifiability_analyzer.check(state)
 
-        # -----------------------------
         # Minimum epistemic effort rule
-        # -----------------------------
-        # Do not stop too early; require sufficient attempts
         if len(self.error_history) < 3:
             return None
 
-        # -----------------------------
         # Epistemic stopping condition
-        # -----------------------------
         if state.consistency_status != "improving" and not identifiable:
-            return self._stop(state)
+            record = self._stop(state)
+            record.decision = "STOP"
+            return record
 
         return None
 
     def _stop(self, state):
-        # Identify stressed or violated assumptions
         stressed = [
             a.id for a in state.assumptions.values()
             if a.status != "holding"
         ]
 
-        # -----------------------------
-        # Confidence calibration
-        # -----------------------------
         iterations = len(self.error_history)
 
         if iterations < 3:
@@ -54,7 +47,6 @@ class EpistemicController:
             variance = max(recent_errors) - min(recent_errors)
             confidence = 0.6 + (iterations / 10) - variance
 
-        # Clamp confidence to sane bounds
         confidence = max(0.1, min(confidence, 1.0))
 
         return BoundaryRecord(

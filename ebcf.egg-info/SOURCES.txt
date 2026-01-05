@@ -24,5 +24,6 @@ ebcf/flows/chest_pain.py
 ebcf/reporting/__init__.py
 ebcf/reporting/boundary_graph.py
 ebcf/reporting/reporting_text.py
+ebcf/reporting/uncertainty_plot.py
 ebcf/utils/__init__.py
 ebcf/utils/logger.py

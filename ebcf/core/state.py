@@ -12,6 +12,13 @@ class Assumption:
 
 @dataclass
 class EpistemicState:
+    """
+    Canonical epistemic snapshot.
+
+    error_history is the primary signal used to determine
+    whether uncertainty is reducing or stagnating.
+    """
+
     observables: Dict[str, Any]
     assumptions: Dict[str, Assumption]
 
@@ -22,4 +29,5 @@ class EpistemicState:
     consistency_status: str = "improving"  # improving | stagnant | inconsistent
     history: List[Dict[str, Any]] = field(default_factory=list)
 
+    # Core epistemic signal
     error_history: List[float] = field(default_factory=list)
